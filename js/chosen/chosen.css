@@ -1,5 +1,6 @@
 /* @group Base */
 .chzn-container {
+  width: 100% !important;
   font-size: 13px;
   position: relative;
   display: inline-block;
@@ -17,6 +18,7 @@
   -moz-box-shadow   : 0 4px 5px rgba(0,0,0,.15);
   box-shadow        : 0 4px 5px rgba(0,0,0,.15);
   z-index: 1010;
+  max-width: 99.5%;
 }
 /* @end */
 
@@ -111,6 +113,7 @@
   border: 1px solid #aaa;
   font-family: sans-serif;
   font-size: 1em;
+  max-width: 100%;
 }
 .chzn-container-single .chzn-drop {
   -webkit-border-radius: 0 0 4px 4px;
@@ -232,7 +235,7 @@
 /* @group Results */
 .chzn-container .chzn-results {
   margin: 0 4px 4px 0;
-  max-height: 240px;
+  max-height: 134px;
   padding: 0 0 0 4px;
   position: relative;
   overflow-x: hidden;
