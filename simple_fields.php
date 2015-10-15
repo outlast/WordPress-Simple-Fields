@@ -2442,7 +2442,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 			$str_child_output = $this->get_pages($args_childs);
 
 			$output .= "<option class='$class' ";
-			$output .= "data-post-id='".$one_page->ID."' title='".$title."'>";
+			$output .= "data-post-id='".$one_page->ID."''>";
 			$output .= $title;
 			$output .= "</option>";
 
@@ -2671,7 +2671,8 @@ sf_d($one_field_slug, 'one_field_slug');*/
 			</select>
 			<script>
 					jQuery('.simple-fields-meta-box-field-group-field-type-post-dialog-post-posts').chosen({
-						width: "406px"
+						width: "406px",
+						inherit_select_classes: true
 					});
 			</script>
 		</div>
