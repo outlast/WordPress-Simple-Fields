@@ -610,10 +610,10 @@ var simple_fields_file_field = (function($) {
 		originLink = $(originLink);
 
 		var div = originLink.closest(".simple-fields-metabox-field");
-		div.find(".simple-fields-field-type-post-postID").attr("value", post_id);
-		div.find(".simple-fields-field-type-post-postName").text(a.text());
-		div.find(".simple-fields-metabox-field-post-clear").show();
-		div.find(".simple-fields-field-type-post-postName").show();
+		div.find(".simple-fields-field-type-post-postID").attr("value", post_id);	// hidden input in original field
+		div.find(".simple-fields-field-type-post-postName").text(a.text());			// text label
+		div.find(".simple-fields-metabox-field-post-clear").show();					// clear button
+		div.find(".simple-fields-field-type-post-postName").show();					// selected post
 
 		dialog.dialog("close");
 
