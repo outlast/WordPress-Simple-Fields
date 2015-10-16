@@ -2442,7 +2442,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 			$str_child_output = $this->get_pages($args_childs);
 
 			$output .= "<option class='$class' ";
-			$output .= "data-post-id='".$one_page->ID."''>";
+			$output .= "value='".$one_page->ID."'>";
 			$output .= $title;
 			$output .= "</option>";
 
@@ -2670,9 +2670,26 @@ sf_d($one_field_slug, 'one_field_slug');*/
 				?>
 			</select>
 			<script>
-					jQuery('.simple-fields-meta-box-field-group-field-type-post-dialog-post-posts').chosen({
-						width: "406px",
-						inherit_select_classes: true
+				// Init Chosen
+				var $ = jQuery;
+				$('.simple-fields-meta-box-field-group-field-type-post-dialog-post-posts')
+					.chosen({width: '406px'})
+					.change(function() {
+						var $dialog = $('.simple-fields-meta-box-field-group-field-type-post-dialog'),                  // Get dialog element
+							$selected = $(this).find('option:selected'),                                                // Get chosen item
+							chosen_post_id = $selected.val(),                                                           // Get chosen post ID
+							chosen_post_name = $selected.html(),                                                        // Get chosen post name
+							$hidden_input = $('#'+ $dialog.attr('data-originid')),                                      // Get corresponding hidden input ID from field group
+							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName');        // Get post name indicator
+
+						// Set post ID in field group's hidden input
+						$hidden_input.val(chosen_post_id);
+
+						// Set post name in field group's link
+						$post_name.html(chosen_post_name.trim()).removeClass('hidden');
+
+						// Close dialog
+						$dialog.dialog('close');
 					});
 			</script>
 		</div>
