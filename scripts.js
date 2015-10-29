@@ -540,23 +540,24 @@ var simple_fields_file_field = (function($) {
 
 		var a = $(this),
 			div = a.closest(".simple-fields-metabox-field"),
+			hidden_input = div.find('.simple-fields-field-type-post-postID').attr('id'),	// Get corresponding hidden input
 			enabled_post_types = div.find("input[name='simple-fields-metabox-field-post-enabled-post-types']").val(),
 			additional_args = div.find('input[name="additional_arguments"]').val();
 
-		$("div.simple-fields-meta-box-field-group-field-type-post-dialog").data("originLink", this).dialog({
+		$("div.simple-fields-meta-box-field-group-field-type-post-dialog").dialog({
 			width: 480,
 			height: 'auto',
 			modal: true,
 			dialogClass: 'wp-dialog',
 			zIndex: 300000,
 			open: function(event, ui) {
-				var originLink = $($(this).data("originLink")),
+				var originLink = a,
 					arr_enabled_post_types = enabled_post_types.split(",");
 				$(this).text("Loading...").load(ajaxurl, {
 					"action": "simple_fields_field_type_post_dialog_load",
 					"arr_enabled_post_types": arr_enabled_post_types,
 					"additional_arguments" : additional_args
-				});
+				}).attr("data-originLink", a[0]).attr("data-originId", hidden_input);	// add connection to field group
 			}
 		});
 
@@ -605,15 +606,15 @@ var simple_fields_file_field = (function($) {
 
 		var a = $(this);
 		var post_id = a.attr("href").match(/post=([\d]+)/)[1];
-		var dialog = $("div.simple-fields-meta-box-field-group-field-type-post-dialog");
+		var dialog = $(".simple-fields-meta-box-field-group-field-type-post-dialog");
 		var originLink = dialog.data("originLink");
 		originLink = $(originLink);
 
 		var div = originLink.closest(".simple-fields-metabox-field");
-		div.find(".simple-fields-field-type-post-postID").attr("value", post_id);
-		div.find(".simple-fields-field-type-post-postName").text(a.text());
-		div.find(".simple-fields-metabox-field-post-clear").show();
-		div.find(".simple-fields-field-type-post-postName").show();
+		div.find(".simple-fields-field-type-post-postID").attr("value", post_id);	// hidden input in original field
+		div.find(".simple-fields-field-type-post-postName").text(a.text());			// text label
+		div.find(".simple-fields-metabox-field-post-clear").show();					// clear button
+		div.find(".simple-fields-field-type-post-postName").show();					// selected post
 
 		dialog.dialog("close");
 

@@ -366,7 +366,6 @@ ul.simple-fields-file-browser-list {
 	}
 	.simple-fields-meta-box-field-group-field-type-post-dialog-post-posts-wrap {
 		height: 185px;
-		overflow: auto;
 		border: 1px solid #DFDFDF;
 		padding: 10px;
 		margin-bottom: 10px;

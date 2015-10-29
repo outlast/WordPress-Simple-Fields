@@ -581,8 +581,8 @@ class simple_fields {
 			wp_enqueue_style('sf-jquery-datepicker', SIMPLE_FIELDS_URL.'datepicker/datePicker.css', false, SIMPLE_FIELDS_VERSION);
 
 			// Chosen for multi selects
-			// wp_enqueue_script("chosen.jquery", SIMPLE_FIELDS_URL . "js/chosen/chosen.jquery.min.js");
-			// wp_enqueue_style("chosen", SIMPLE_FIELDS_URL.'js/chosen/chosen.css', false, SIMPLE_FIELDS_VERSION);
+			 wp_enqueue_script("chosen.jquery", SIMPLE_FIELDS_URL . "js/chosen/chosen.jquery.min.js");
+			 wp_enqueue_style("chosen", SIMPLE_FIELDS_URL.'js/chosen/chosen.css', false, SIMPLE_FIELDS_VERSION);
 
 			wp_enqueue_style('simple-fields-styles-post', SIMPLE_FIELDS_URL.'styles-edit-post.css', false, SIMPLE_FIELDS_VERSION);
 
@@ -2441,15 +2441,14 @@ sf_d($one_field_slug, 'one_field_slug');*/
 			$args_childs["child_of"] = $one_page->ID;
 			$str_child_output = $this->get_pages($args_childs);
 
-			$output .= "<li class='$class'>";
-			$output .= "<a href='$edit_link' data-post-id='".$one_page->ID."'>";
+			$output .= "<option class='$class' ";
+			$output .= "value='".$one_page->ID."'>";
 			$output .= $title;
-			$output .= "</a>";
+			$output .= "</option>";
 
 			// add child articles
-			$output .= $str_child_output;
+//			$output .= $str_child_output;
 
-			$output .= "</li>";
 		}
 
 		// if this is a child listing, add ul
@@ -2644,7 +2643,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 		} ?>
 
 		<div class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts-wrap">
-			<ul class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts">
+			<select class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts">
 				<?php
 
 				// get root items
@@ -2669,7 +2668,30 @@ sf_d($one_field_slug, 'one_field_slug');*/
 				$output = $this->get_pages($args);
 				echo $output;
 				?>
-			</ul>
+			</select>
+			<script>
+				// Init Chosen
+				var $ = jQuery;
+				$('.simple-fields-meta-box-field-group-field-type-post-dialog-post-posts')
+					.chosen({width: '406px'})
+					.change(function() {
+						var $dialog = $('.simple-fields-meta-box-field-group-field-type-post-dialog'),                  // Get dialog element
+							$selected = $(this).find('option:selected'),                                                // Get chosen item
+							chosen_post_id = $selected.val(),                                                           // Get chosen post ID
+							chosen_post_name = $selected.html(),                                                        // Get chosen post name
+							$hidden_input = $('#'+ $dialog.attr('data-originid')),                                      // Get corresponding hidden input ID from field group
+							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName');        // Get post name indicator
+
+						// Set post ID in field group's hidden input
+						$hidden_input.val(chosen_post_id);
+
+						// Set post name in field group's link
+						$post_name.html(chosen_post_name.trim()).removeClass('hidden');
+
+						// Close dialog
+						$dialog.dialog('close');
+					});
+			</script>
 		</div>
 		<div class="submitbox">
 			<div class="simple-fields-postdialog-link-cancel">
