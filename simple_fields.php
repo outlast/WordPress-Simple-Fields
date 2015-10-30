@@ -2680,13 +2680,17 @@ sf_d($one_field_slug, 'one_field_slug');*/
 							chosen_post_id = $selected.val(),                                                           // Get chosen post ID
 							chosen_post_name = $selected.html(),                                                        // Get chosen post name
 							$hidden_input = $('#'+ $dialog.attr('data-originid')),                                      // Get corresponding hidden input ID from field group
-							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName');        // Get post name indicator
+							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName'),        // Get post name indicator
+							$clear_btn = $hidden_input.parent().find('.simple-fields-metabox-field-post-clear');        // Get Clear post button
 
 						// Set post ID in field group's hidden input
 						$hidden_input.val(chosen_post_id);
 
 						// Set post name in field group's link
 						$post_name.html(chosen_post_name.trim()).removeClass('hidden');
+
+						// Show Clear post button
+						$clear_btn.show();
 
 						// Close dialog
 						$dialog.dialog('close');

@@ -599,6 +599,7 @@ var simple_fields_file_field = (function($) {
 
 	/**
 	 * in dialog: click on a post = update input in field group and then close dialog
+	 * todo: remove?
 	 */
 	$(document).on("click", ".simple-fields-meta-box-field-group-field-type-post-dialog-post-posts a", function(e) {
 
