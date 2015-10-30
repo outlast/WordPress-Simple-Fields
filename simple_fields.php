@@ -2422,7 +2422,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 		$args = apply_filters( "simple_fields_get_pages_args", $args);
 		$pages = get_posts($args);
 
-		$output = "";
+		$output = "<option></option>";
 		$str_child_output = "";
 		foreach ($pages as $one_page) {
 			$edit_link = get_edit_post_link($one_page->ID);
