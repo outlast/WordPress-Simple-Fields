@@ -343,6 +343,7 @@ ul.simple-fields-file-browser-list {
 }
 .simple-fields-meta-box-field-group-field-type-post-dialog {
 	margin: 10px;
+	overflow: visible;
 }
 	.simple-fields-meta-box-field-group-field-type-post-dialog p {
 		margin: 0;
