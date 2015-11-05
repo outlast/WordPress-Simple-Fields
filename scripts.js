@@ -629,7 +629,7 @@ var simple_fields_file_field = (function($) {
 		var a = $(this);
 		var div = a.closest(".simple-fields-metabox-field");
 		div.find(".simple-fields-metabox-field-post-clear").hide("fast");
-		div.find(".simple-fields-field-type-post-postName").hide("fast");
+		div.find(".simple-fields-field-type-post-postName").text("");
 		div.find(".simple-fields-field-type-post-postID").attr("value", "");
 	});
 
