@@ -1548,7 +1548,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 						// Output action buttons (select, clear, etc.)
 						echo "<div>";
-						printf("<a class='%s' href='#'>%s</a>", "simple-fields-metabox-field-post-select", __("Select post", "simple-fields"));
+						printf("<a class='%s' href='#'>%s</a>&nbsp;", "simple-fields-metabox-field-post-select", __("Select post", "simple-fields"));
 						printf("<a class='%s' href='#'>%s</a>", "simple-fields-metabox-field-post-clear $showHideClass", __("Clear", "simple-fields"));
 						echo "</div>";
 
