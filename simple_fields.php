@@ -2608,13 +2608,15 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 		// If no post type is selected then don't show any posts
 		if ( empty( $arr_enabled_post_types ) ) {
-			_e("<p>No post type is selected. Please at at least one post type in Simple Fields.</p>", "simple-fields");
+			_e("<p>No post type is selected. Please select at least one post type in Simple Fields.</p>", "simple-fields");
 			exit;
 		}
 		?>
 
 		<?php if (count($arr_enabled_post_types) > 1) { ?>
 			<p>Show posts of type:</p>
+		<?php $list_enabled_post_types = implode(',', $arr_enabled_post_types); ?>
+			<input type="hidden" name="popup-enabled-post-types" value="<?php echo $list_enabled_post_types ?>">
 			<ul class="simple-fields-meta-box-field-group-field-type-post-dialog-post-types">
 				<?php
 				$loopnum = 0;
@@ -2644,6 +2646,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 		<div class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts-wrap">
 			<select class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts">
+				<option value="0">Click to search</option>
 				<?php
 
 				// get root items
@@ -2655,8 +2658,12 @@ sf_d($one_field_slug, 'one_field_slug');*/
 					"post_status" => "publish"
 				);
 
+				$disable_child_items = (bool) false;
+
 				$hierarchical = (bool) $existing_post_types[$selected_post_type]->hierarchical;
-				if ($hierarchical) {
+
+
+				if ($hierarchical && $disable_child_items) {
 					$args["parent"] = 0;
 					$args["post_parent"] = 0;
 				}
