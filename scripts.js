@@ -582,9 +582,7 @@ var simple_fields_file_field = (function($) {
 
 		var a = $(this),
 			dialog = $("div.simple-fields-meta-box-field-group-field-type-post-dialog"),
-			originLink = $(dialog.data("originLink")),
-			div = originLink.closest(".simple-fields-metabox-field"),
-			enabled_post_types = div.find("input[name='simple-fields-metabox-field-post-enabled-post-types']").val();
+			enabled_post_types = $('input[name="popup-enabled-post-types"]').val();
 
 		// add this too?
 		// additional_args = div.find('input[name="additional_arguments"]').val();
@@ -599,15 +597,17 @@ var simple_fields_file_field = (function($) {
 
 	/**
 	 * in dialog: click on a post = update input in field group and then close dialog
+	 * todo: remove?
 	 */
 	$(document).on("click", ".simple-fields-meta-box-field-group-field-type-post-dialog-post-posts a", function(e) {
 
 		e.preventDefault();
 
-		var a = $(this);
-		var post_id = a.attr("href").match(/post=([\d]+)/)[1];
-		var dialog = $(".simple-fields-meta-box-field-group-field-type-post-dialog");
-		var originLink = dialog.data("originLink");
+		var a = $(this),
+			post_id = a.attr("href").match(/post=([\d]+)/)[1],
+			dialog = $(".simple-fields-meta-box-field-group-field-type-post-dialog"),
+			originLink = dialog.data("originLink");
+
 		originLink = $(originLink);
 
 		var div = originLink.closest(".simple-fields-metabox-field");
@@ -628,7 +628,7 @@ var simple_fields_file_field = (function($) {
 		var a = $(this);
 		var div = a.closest(".simple-fields-metabox-field");
 		div.find(".simple-fields-metabox-field-post-clear").hide("fast");
-		div.find(".simple-fields-field-type-post-postName").hide("fast");
+		div.find(".simple-fields-field-type-post-postName").text("");
 		div.find(".simple-fields-field-type-post-postID").attr("value", "");
 	});
 

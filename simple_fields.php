@@ -1548,7 +1548,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 						// Output action buttons (select, clear, etc.)
 						echo "<div>";
-						printf("<a class='%s' href='#'>%s</a>", "simple-fields-metabox-field-post-select", __("Select post", "simple-fields"));
+						printf("<a class='%s' href='#'>%s</a>&nbsp;", "simple-fields-metabox-field-post-select", __("Select post", "simple-fields"));
 						printf("<a class='%s' href='#'>%s</a>", "simple-fields-metabox-field-post-clear $showHideClass", __("Clear", "simple-fields"));
 						echo "</div>";
 
@@ -2422,7 +2422,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 		$args = apply_filters( "simple_fields_get_pages_args", $args);
 		$pages = get_posts($args);
 
-		$output = "";
+		$output = "<option></option>";
 		$str_child_output = "";
 		foreach ($pages as $one_page) {
 			$edit_link = get_edit_post_link($one_page->ID);
@@ -2608,13 +2608,15 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 		// If no post type is selected then don't show any posts
 		if ( empty( $arr_enabled_post_types ) ) {
-			_e("<p>No post type is selected. Please at at least one post type in Simple Fields.</p>", "simple-fields");
+			_e("<p>No post type is selected. Please select at least one post type in Simple Fields.</p>", "simple-fields");
 			exit;
 		}
 		?>
 
 		<?php if (count($arr_enabled_post_types) > 1) { ?>
 			<p>Show posts of type:</p>
+		<?php $list_enabled_post_types = implode(',', $arr_enabled_post_types); ?>
+			<input type="hidden" name="popup-enabled-post-types" value="<?php echo $list_enabled_post_types ?>">
 			<ul class="simple-fields-meta-box-field-group-field-type-post-dialog-post-types">
 				<?php
 				$loopnum = 0;
@@ -2644,6 +2646,7 @@ sf_d($one_field_slug, 'one_field_slug');*/
 
 		<div class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts-wrap">
 			<select class="simple-fields-meta-box-field-group-field-type-post-dialog-post-posts">
+				<option value="0">Click to search</option>
 				<?php
 
 				// get root items
@@ -2655,8 +2658,12 @@ sf_d($one_field_slug, 'one_field_slug');*/
 					"post_status" => "publish"
 				);
 
+				$disable_child_items = (bool) false;
+
 				$hierarchical = (bool) $existing_post_types[$selected_post_type]->hierarchical;
-				if ($hierarchical) {
+
+
+				if ($hierarchical && $disable_child_items) {
 					$args["parent"] = 0;
 					$args["post_parent"] = 0;
 				}
@@ -2680,13 +2687,17 @@ sf_d($one_field_slug, 'one_field_slug');*/
 							chosen_post_id = $selected.val(),                                                           // Get chosen post ID
 							chosen_post_name = $selected.html(),                                                        // Get chosen post name
 							$hidden_input = $('#'+ $dialog.attr('data-originid')),                                      // Get corresponding hidden input ID from field group
-							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName');        // Get post name indicator
+							$post_name = $hidden_input.parent().find('.simple-fields-field-type-post-postName'),        // Get post name indicator
+							$clear_btn = $hidden_input.parent().find('.simple-fields-metabox-field-post-clear');        // Get Clear post button
 
 						// Set post ID in field group's hidden input
 						$hidden_input.val(chosen_post_id);
 
 						// Set post name in field group's link
 						$post_name.html(chosen_post_name.trim()).removeClass('hidden');
+
+						// Show Clear post button
+						$clear_btn.show();
 
 						// Close dialog
 						$dialog.dialog('close');
